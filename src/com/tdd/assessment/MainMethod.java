@@ -34,12 +34,15 @@ public class MainMethod {
 		Assert.assertEquals(0, obj.AddThrowNegNumException("//:\n"));
 		//Assert.assertEquals(RuntimeException.class, obj.AddThrowNegNumException("//'\n1'2'-3"));			throws  "negatives not allowed[-3]"
 		//Assert.assertEquals(RuntimeException.class, obj.AddThrowNegNumException("//'\n-1'-2'-3"));        throws  "negatives not allowed[-1, -2, -3]"
-		
+		System.out.println(obj.GetCalledCount());
 	}
 }
 class StringCalculator{
-	
+	int methodCallCount=0;
 	public int AddThrowNegNumException(String numbers){
+		synchronized(this) {
+			methodCallCount++;
+	    }
 		if(numbers=="") return 0;
 		else{
 			int sum=0;
@@ -159,4 +162,8 @@ class StringCalculator{
 			return sum;
 		}
 	}
+	public int GetCalledCount(){
+		return methodCallCount;
+	}
+
 }
